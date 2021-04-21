@@ -20,7 +20,7 @@ client.on("message", (message) => {
     const rolls = rollDices();
     const score = count(rolls, "+") - count(rolls, "-");
     const grade = getGrade(score);
-    const response = "[" + rolls.join("") + "]" + " => " + score + " " + grade;
+    const response = buildResponse(rolls, score, grade);
 
     message.channel.send(response);
   }
@@ -39,6 +39,16 @@ const rollDices = (): string[] => {
   }
 
   return rolls;
+};
+
+const buildResponse = (
+  rolls: string[],
+  score: number,
+  grade: string
+): string => {
+  const headline = "```markdown\n# " + score + " " + grade + "\n";
+  const details = "Details: [" + rolls.join("") + "]```";
+  return headline + details;
 };
 
 const getGrade = (score: number): string => {
