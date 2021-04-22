@@ -16,11 +16,31 @@ client.on("ready", () => {
 });
 
 client.on("message", (message) => {
+  const macroRegex = /^!fd[+-]\d/;
+
   if (message.content === "!fd") {
     const rolls = rollDices();
     const score = count(rolls, "+") - count(rolls, "-");
     const grade = getGrade(score);
-    const response = buildResponse(rolls, score, grade);
+    const response = buildResponse(rolls, score, 0, grade);
+
+    message.channel.send(response);
+  }
+
+  if (macroRegex.test(message.content)) {
+    let mod = 0;
+    if (message.content.includes("+")) {
+      const seq = message.content.split("+");
+      mod = parseInt(seq[seq.length - 1] as string, 10);
+    } else {
+      const seq = message.content.split("-");
+      mod = -parseInt(seq[seq.length - 1] as string, 10);
+    }
+
+    const rolls = rollDices();
+    const score = count(rolls, "+") - count(rolls, "-") + mod;
+    const grade = getGrade(score);
+    const response = buildResponse(rolls, score, mod, grade);
 
     message.channel.send(response);
   }
@@ -44,10 +64,11 @@ const rollDices = (): string[] => {
 const buildResponse = (
   rolls: string[],
   score: number,
-  grade: string
+  mod: number,
+  grade: string,
 ): string => {
   const headline = "```markdown\n# " + score + " " + grade + "\n";
-  const details = "Details: [" + rolls.join("") + "]```";
+  const details = "Details: [" + rolls.join("") + "] " + mod + "```";
   return headline + details;
 };
 
