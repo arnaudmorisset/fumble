@@ -3,7 +3,7 @@ const getMod = (cmd: string): number => {
   if (cmd.includes("+")) {
     const seq = cmd.split("+");
     mod = parseInt(seq[seq.length - 1] as string, 10);
-  } else {
+  } else if (cmd.includes("-")) {
     const seq = cmd.split("-");
     mod = -parseInt(seq[seq.length - 1] as string, 10);
   }
