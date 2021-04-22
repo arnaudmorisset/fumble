@@ -1,5 +1,7 @@
 # fumble
 
+[![Build and Test](https://github.com/arnaudmorisset/fumble/actions/workflows/build_and_test.yml/badge.svg?branch=main)](https://github.com/arnaudmorisset/fumble/actions/workflows/build_and_test.yml)
+
 Run [Fate](https://fate-srd.com/) dices (aka [Fudge](https://www.fudgerpg.com/) dices) in [Discord](https://discord.com/).
 
 ## Installation
